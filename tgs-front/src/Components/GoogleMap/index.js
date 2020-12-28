@@ -1,79 +1,73 @@
 import React from 'react'
-import GoogleMapReact from 'google-map-react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
-import Geocode from "react-geocode";
-import {Icon} from '@iconify/react';
-import googlemapsIcon from '@iconify-icons/simple-icons/googlemaps';
+import { Map, GoogleApiWrapper, Marker  } from 'google-maps-react';
 
 
+const mapStyles = {
+    width: '67%',
+    height: '90%',
+  };
 
-/*  
-// set Google Maps Geocoding API for purposes of quota management. Its optional but recommended.
-Geocode.setApiKey("AIzaSyBzXJYKmmUGbbhLPXodGOOCIhWcbTDb98Y");
- 
-// set response language. Defaults to english.
-Geocode.setLanguage("en");
- 
-// set response region. Its optional.
-// A Geocoding request with region=es (Spain) will return the Spanish city.
-Geocode.setRegion("es");
- 
-// Enable or disable logs. Its optional.
-Geocode.enableDebug();
- 
-// Get address from latitude & longitude.
-Geocode.fromLatLng("48.8583701", "2.2922926").then(
-  response => {
-    const address = response.results[0].formatted_address;
-    console.log(address);
-  },
-  error => {
-    console.error(error);
-  }
-); */
+class GoogleMap extends React.Component {
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+            markers: [
+              ]
+            };
+            this.onClick = this.onClick.bind(this);
+      }
 
-const LocationPin = ({text}) => (
-    <div className="pin">
-    <Icon icon={googlemapsIcon} />
-    <p className="pin-text">{text}</p>
-  </div>
-)
-function GoogleMapComponent() {
-
-  const [center, setCenter] = React.useState({lat: 48.85337622108853, lng: 2.338379690527348})
-    navigator?.geolocation.getCurrentPosition(({coords: {latitude: lat, longitude: lng}}) => {
-        setCenter({lat: lat, lng: lng})  
-    })
-
-
-  const onDragMarker = (latLng) => {
-      console.log('lat', latLng.lat(),'lng', latLng.lng())
-    setCenter({lat: latLng.lat(), lng: latLng.lng()}) 
-  }
-
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container fixed>
-      <div style={{ height: '100vh', width: '100%' }}>
-      <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyCg6_dWimcBcRk9ciysiN0W_I99FJnRAdI' }}
-          defaultCenter={center}
-          defaultZoom={20}  
-        >
-          <LocationPin
-            lat={center.lat}
-            lng={center.lng}
-            text={'Départ'}
-            onDragEnd={(e) => onDragMarker(e.latLng)}
-            >
-        </LocationPin>
-        </GoogleMapReact>
-        </div>
-      </Container>
-    </React.Fragment>
-  )
+      onClick(t, map, coord) {
+        const { latLng } = coord;
+        const lat = latLng.lat();
+        const lng = latLng.lng();
+        if(this.state.markers.length >= 2) {
+            return
+        }
+        this.setState(previousState => {
+          return {
+            markers: [
+              ...previousState.markers,
+              {
+                title: "",
+                name: "",
+                position: { lat, lng }
+              }
+            ]
+          };
+        });
+      }
+        render() {
+                console.log(this.props)
+            return (
+              <div>
+                <Map
+                  google={this.props.google}
+                  zoom={16}
+                  onClick={this.onClick}
+                  style={mapStyles}
+                  initialCenter={{
+                    lat:  48.910609 ,
+                    lng:  2.314187
+                  }}
+                >
+                 {this.state.markers.map((marker, index) => (
+            <Marker
+              key={index}
+              title={marker.title}
+              name={marker.name}
+              draggable
+              position={marker.position}
+            />
+          ))}
+                </Map>
+              </div>
+            );
+          }
 }
 
-export default React.memo(GoogleMapComponent)
+export default GoogleApiWrapper({
+    apiKey: 'AIzaSyBzXJYKmmUGbbhLPXodGOOCIhWcbTDb98Y'
+  })(GoogleMap);
+  
