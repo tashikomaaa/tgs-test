@@ -6,14 +6,14 @@ before start to review it this is my personnal review.
 
 - for the skillvalue test i've got a little 9/20.
 
-for the build test this is my appreciation of my job, and some commentary of it.
+for the build test this is my appreciation of my job, and some commentary of it:
 
-Just got some troubles with the api, don't really know if it's the key are the way i call it.
+- Just got some troubles with the api, don't really know if it's the key are the way i call it.
 
-I've build a skelton of sails api ( don't realy masterize this lib so i've learn about, and it's take me a lot of time).
+- I've build a skelton of sails api ( don't realy masterize this lib so i've learn about, and it's take me a lot of time).
 For the front i done a refactoring of all the project because my sails api doesn't work at the time, but i want to show something.
 
-For the Redoc same process, 
+- For the Redoc same process, 
 need to learn about, take long time, 
 and at the final can't implement it in the project at the time.
 
