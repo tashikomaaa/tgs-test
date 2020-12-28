@@ -6,7 +6,9 @@
   "keywords": [],
   "dependencies": {
     "@sailshq/lodash": "^3.10.3",
+    "node-fetch": "^2.6.1",
     "redoc": "^2.0.0-rc.45",
+    "redoc-cli": "^0.10.2",
     "sails": "^1.4.0",
     "sails-hook-organics": "^2.2.0",
     "sails-hook-orm": "^3.0.1",
